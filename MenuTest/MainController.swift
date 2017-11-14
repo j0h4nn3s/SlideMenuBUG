@@ -27,7 +27,10 @@ class MainController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        let safeAreaTop = self.view.safeAreaInsets.top
+        var safeAreaTop = self.topLayoutGuide.length
+        if #available(iOS 11.0, *) {
+            safeAreaTop = self.view.safeAreaInsets.top
+        }
         let height = self.view.bounds.size.height - 40 - safeAreaTop
         let width = self.view.bounds.size.width - 40
         
