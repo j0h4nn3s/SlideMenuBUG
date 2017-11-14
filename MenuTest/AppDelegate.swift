@@ -12,11 +12,28 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var slideMenuController: SlideMenuController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        
+        let mainViewController = MainController()
+        let leftViewController = MenuController()
+        
+        let navigationController = UINavigationController(rootViewController: mainViewController)
+        let btnMenu = UIBarButtonItem(title: "Menu", style: .done, target: self, action: #selector(openMenu))
+        navigationController.topViewController?.navigationItem.rightBarButtonItem = btnMenu
+        
+        self.slideMenuController = SlideMenuController(mainViewController: navigationController, leftMenuViewController: leftViewController)
+        self.window?.rootViewController = self.slideMenuController
+    
+        self.window?.makeKeyAndVisible()
+        
         return true
+    }
+    
+    @objc private func openMenu() {
+        self.slideMenuController?.openLeft()
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
